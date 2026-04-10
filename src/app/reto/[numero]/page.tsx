@@ -13,7 +13,8 @@ import { useSession } from "@/context/SessionContext";
 export default function RetoPage({ params }: { params: { numero: string } }) {
   const { numero } = params;
   const router = useRouter();
-  const { session, finishSession } = useSession();
+  const { session, role, finishSession } = useSession();
+  const isInterviewer = role === "interviewer";
   const retoNumber = parseInt(numero, 10);
 
   if (!session) {
@@ -65,16 +66,18 @@ export default function RetoPage({ params }: { params: { numero: string } }) {
         {retoNumber === 2 && <Reto2 />}
         {retoNumber === 3 && <Reto3 />}
 
-        <InterviewerNotes retoNumber={retoNumber} />
+        {isInterviewer && <InterviewerNotes retoNumber={retoNumber} />}
 
-        <div className="flex justify-end mt-8 pb-8">
-          <Button
-            onClick={handleNext}
-            className="bg-[var(--primary)] hover:opacity-90 text-white px-8"
-          >
-            {isLast ? "Finalizar entrevista" : `Siguiente reto →`}
-          </Button>
-        </div>
+        {isInterviewer && (
+          <div className="flex justify-end mt-8 pb-8">
+            <Button
+              onClick={handleNext}
+              className="bg-[var(--primary)] hover:opacity-90 text-white px-8"
+            >
+              {isLast ? "Finalizar entrevista" : `Siguiente reto →`}
+            </Button>
+          </div>
+        )}
       </main>
     </div>
   );

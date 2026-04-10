@@ -2,20 +2,26 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Logo } from "@/components/Logo";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { supabase } from "@/lib/supabase";
+import { useSession as useAppSession } from "@/context/SessionContext";
 import type { Session, RetoAttempt, RetoNote } from "@/lib/types";
 import { RETO_CONFIG } from "@/lib/types";
 
 export default function SessionDetailPage({ params }: { params: { id: string } }) {
   const { id } = params;
+  const router = useRouter();
+  const { role } = useAppSession();
   const [session, setSession] = useState<Session | null>(null);
   const [attempts, setAttempts] = useState<RetoAttempt[]>([]);
   const [notes, setNotes] = useState<RetoNote[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (role !== "interviewer") return;
     Promise.all([
       supabase.from("sessions").select().eq("id", id).single(),
       supabase.from("reto_attempts").select().eq("session_id", id).order("submitted_at"),
@@ -26,7 +32,23 @@ export default function SessionDetailPage({ params }: { params: { id: string } }
       if (notesRes.data) setNotes(notesRes.data);
       setLoading(false);
     });
-  }, [id]);
+  }, [id, role]);
+
+  if (role !== "interviewer") {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <p className="text-[var(--muted-foreground)]">Acceso restringido</p>
+          <Button
+            onClick={() => router.push("/")}
+            className="bg-[var(--primary)] hover:opacity-90 text-white"
+          >
+            Ir al inicio
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   if (loading) {
     return (

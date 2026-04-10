@@ -4,8 +4,12 @@ import { createContext, useContext, useState, useCallback, type ReactNode } from
 import { supabase } from "@/lib/supabase";
 import type { Session, RetoAttempt } from "@/lib/types";
 
+export type Role = "candidate" | "interviewer";
+
 interface SessionContextType {
   session: Session | null;
+  role: Role;
+  setRole: (role: Role) => void;
   attempts: RetoAttempt[];
   createSession: (candidateName: string) => Promise<Session>;
   finishSession: () => Promise<void>;
@@ -17,6 +21,7 @@ const SessionContext = createContext<SessionContextType | null>(null);
 
 export function SessionProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
+  const [role, setRole] = useState<Role>("candidate");
   const [attempts, setAttempts] = useState<RetoAttempt[]>([]);
 
   const createSession = useCallback(async (candidateName: string) => {
@@ -58,7 +63,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <SessionContext.Provider value={{ session, attempts, createSession, finishSession, addAttempt, loadSession }}>
+    <SessionContext.Provider value={{ session, role, setRole, attempts, createSession, finishSession, addAttempt, loadSession }}>
       {children}
     </SessionContext.Provider>
   );

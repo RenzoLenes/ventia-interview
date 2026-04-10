@@ -12,11 +12,12 @@ interface RetoHeaderProps {
 }
 
 export function RetoHeader({ retoNumber, onTimerExpire }: RetoHeaderProps) {
-  const { session } = useSession();
+  const { session, role } = useSession();
   const config = RETO_CONFIG[retoNumber as keyof typeof RETO_CONFIG];
+  const isInterviewer = role === "interviewer";
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-[#0a0a14]/90 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-[var(--border)] bg-[var(--noche)]/90 backdrop-blur-md">
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-6">
           <Logo size="sm" />
@@ -28,8 +29,12 @@ export function RetoHeader({ retoNumber, onTimerExpire }: RetoHeaderProps) {
         </div>
         <div className="flex items-center gap-6">
           <ProgressPills current={retoNumber} />
-          <div className="h-6 w-px bg-[var(--border)]" />
-          <Timer minutes={config.minutes} onExpire={onTimerExpire} />
+          {isInterviewer && (
+            <>
+              <div className="h-6 w-px bg-[var(--border)]" />
+              <Timer minutes={config.minutes} onExpire={onTimerExpire} />
+            </>
+          )}
         </div>
       </div>
     </header>

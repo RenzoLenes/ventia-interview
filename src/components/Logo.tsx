@@ -1,11 +1,17 @@
 "use client";
 
+import Image from "next/image";
+
 export function Logo({ size = "md" }: { size?: "sm" | "md" | "lg" }) {
-  const sizes = { sm: "text-lg", md: "text-2xl", lg: "text-4xl" };
+  const heights = { sm: 24, md: 32, lg: 48 };
+  const widths = { sm: 90, md: 120, lg: 180 };
   return (
-    <span className={`${sizes[size]} font-bold tracking-tight`}>
-      <span className="text-[var(--primary)]">Vent</span>
-      <span className="text-[var(--foreground)]">IA</span>
-    </span>
+    <Image
+      src="/logo-ventia-header.webp"
+      alt="VentIA"
+      width={widths[size]}
+      height={heights[size]}
+      priority
+    />
   );
 }

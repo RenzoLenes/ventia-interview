@@ -2,16 +2,23 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Logo } from "@/components/Logo";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { supabase } from "@/lib/supabase";
+import { useSession } from "@/context/SessionContext";
 import type { Session } from "@/lib/types";
 
 export default function AdminPage() {
+  const router = useRouter();
+  const { role } = useSession();
   const [sessions, setSessions] = useState<Session[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (role !== "interviewer") return;
+
     supabase
       .from("sessions")
       .select()
@@ -20,7 +27,23 @@ export default function AdminPage() {
         if (data) setSessions(data);
         setLoading(false);
       });
-  }, []);
+  }, [role]);
+
+  if (role !== "interviewer") {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <p className="text-[var(--muted-foreground)]">Acceso restringido</p>
+          <Button
+            onClick={() => router.push("/")}
+            className="bg-[var(--primary)] hover:opacity-90 text-white"
+          >
+            Ir al inicio
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen">
