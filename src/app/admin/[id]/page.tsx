@@ -68,7 +68,7 @@ export default function SessionDetailPage({ params }: { params: { id: string } }
 
   return (
     <div className="min-h-screen">
-      <header className="border-b border-[var(--border)] bg-[#0a0a14]/90 backdrop-blur-md">
+      <header className="border-b border-[var(--border)] bg-[var(--noche)]/90 backdrop-blur-md">
         <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Logo size="sm" />

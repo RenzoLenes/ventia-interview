@@ -98,7 +98,7 @@ function highlightPython(code: string) {
 }
 
 export function Reto2() {
-  const { session, attempts, addAttempt } = useSession();
+  const { session, role, attempts, addAttempt } = useSession();
   const [analysis, setAnalysis] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [showBugs, setShowBugs] = useState(false);
@@ -183,29 +183,30 @@ export function Reto2() {
 
         <AttemptHistory attempts={retoAttempts} />
 
-        {/* Interviewer bug reference */}
-        <div className="mt-8 border-t border-[var(--border)] pt-4">
-          <button
-            onClick={() => setShowBugs(!showBugs)}
-            className="text-xs text-[var(--marino)] hover:text-[var(--muted-foreground)] transition-colors"
-          >
-            {showBugs ? "▾" : "▸"} Ver bugs plantados (solo entrevistador)
-          </button>
-          {showBugs && (
-            <div className="mt-3 space-y-3">
-              {BUGS.map((bug, i) => (
-                <div key={i} className="rounded border border-amber-500/10 bg-amber-500/5 p-3">
-                  <p className="text-xs font-medium text-amber-400">
-                    {i + 1}. {bug.title}
-                  </p>
-                  <p className="text-xs text-[var(--muted-foreground)] mt-1">
-                    {bug.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+        {role === "interviewer" && (
+          <div className="mt-8 border-t border-[var(--border)] pt-4">
+            <button
+              onClick={() => setShowBugs(!showBugs)}
+              className="text-xs text-[var(--marino)] hover:text-[var(--muted-foreground)] transition-colors"
+            >
+              {showBugs ? "▾" : "▸"} Ver bugs plantados
+            </button>
+            {showBugs && (
+              <div className="mt-3 space-y-3">
+                {BUGS.map((bug, i) => (
+                  <div key={i} className="rounded border border-amber-500/10 bg-amber-500/5 p-3">
+                    <p className="text-xs font-medium text-amber-400">
+                      {i + 1}. {bug.title}
+                    </p>
+                    <p className="text-xs text-[var(--muted-foreground)] mt-1">
+                      {bug.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
