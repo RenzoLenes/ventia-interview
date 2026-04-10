@@ -124,7 +124,9 @@ export function Reto2() {
       .select()
       .single();
 
-    if (!error && data) {
+    if (error) {
+      setLastResult("Error al guardar el intento");
+    } else if (data) {
       addAttempt(data as RetoAttempt);
       setLastResult("Análisis enviado ✓");
       setAnalysis("");

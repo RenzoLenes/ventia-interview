@@ -122,7 +122,9 @@ export function Reto1() {
       .select()
       .single();
 
-    if (!error && data) {
+    if (error) {
+      setLastResult({ valid: false, message: "Error al guardar el intento" });
+    } else if (data) {
       addAttempt(data as RetoAttempt);
       setLastResult({
         valid: isValid,

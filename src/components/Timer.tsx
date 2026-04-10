@@ -42,7 +42,7 @@ export function Timer({ minutes, onExpire, paused = false }: TimerProps) {
           <path
             d="M18 2.0845a 15.9155 15.9155 0 0 1 0 31.831 15.9155 15.9155 0 0 1 0 -31.831"
             fill="none"
-            stroke="#1e1e3a"
+            stroke="oklch(0.28 0.06 255)"
             strokeWidth="2.5"
           />
           <path

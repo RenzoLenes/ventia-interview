@@ -12,7 +12,7 @@ import { RETO_CONFIG } from "@/lib/types";
 
 export default function FinPage() {
   const router = useRouter();
-  const { session, attempts, finishSession } = useSession();
+  const { session, role, attempts, finishSession } = useSession();
   const [notes, setNotes] = useState<RetoNote[]>([]);
   const [showSummary, setShowSummary] = useState(false);
 
@@ -128,7 +128,7 @@ export default function FinPage() {
                     </div>
                   )}
 
-                  {retoNote && retoNote.note && (
+                  {role === "interviewer" && retoNote && retoNote.note && (
                     <div className="mt-4 rounded border border-amber-500/10 bg-amber-500/5 p-3">
                       <p className="text-xs font-medium text-amber-400 mb-1">Notas del entrevistador</p>
                       <p className="text-sm text-[var(--muted-foreground)] whitespace-pre-wrap">{retoNote.note}</p>
