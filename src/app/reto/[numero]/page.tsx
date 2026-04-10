@@ -68,16 +68,14 @@ export default function RetoPage({ params }: { params: { numero: string } }) {
 
         {isInterviewer && <InterviewerNotes retoNumber={retoNumber} />}
 
-        {isInterviewer && (
-          <div className="flex justify-end mt-8 pb-8">
-            <Button
-              onClick={handleNext}
-              className="bg-[var(--primary)] hover:opacity-90 text-white px-8"
-            >
-              {isLast ? "Finalizar entrevista" : `Siguiente reto →`}
-            </Button>
-          </div>
-        )}
+        <div className="flex justify-end mt-8 pb-8">
+          <Button
+            onClick={handleNext}
+            className="bg-[var(--primary)] hover:opacity-90 text-white px-8"
+          >
+            {isLast ? "Finalizar entrevista" : `Siguiente reto →`}
+          </Button>
+        </div>
       </main>
     </div>
   );
