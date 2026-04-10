@@ -4,91 +4,123 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap');
+
+@layer base {
+  .theme {
+    --font-heading: 'Outfit', sans-serif;
+    --font-sans: 'Outfit', sans-serif;
+  }
+  :root {
+    /* VentIA palette */
+    --volt:   oklch(0.58 0.19 260);
+    --aqua:   oklch(0.78 0.11 220);
+    --marino: oklch(0.33 0.10 255);
+    --cielo:  oklch(0.93 0.04 230);
+    --noche:  oklch(0.20 0.03 250);
+
+    --background: var(--noche);
+    --foreground: var(--cielo);
+    --card: oklch(0.23 0.04 250);
+    --card-foreground: var(--cielo);
+    --popover: oklch(0.23 0.04 250);
+    --popover-foreground: var(--cielo);
+    --primary: var(--volt);
+    --primary-foreground: #ffffff;
+    --secondary: var(--marino);
+    --secondary-foreground: var(--cielo);
+    --muted: var(--marino);
+    --muted-foreground: var(--aqua);
+    --accent: var(--volt);
+    --accent-foreground: #ffffff;
+    --destructive: #ef4444;
+    --border: oklch(0.28 0.06 255);
+    --input: oklch(0.28 0.06 255);
+    --ring: var(--volt);
+    --radius: 0.5rem;
+  }
+  * {
+    @apply border-[var(--border)];
+  }
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: 'Outfit', sans-serif;
+  }
+  html {
+    font-family: 'Outfit', sans-serif;
+  }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
 }
 
-@layer base {
-  .theme {
-    --font-heading: var(--font-sans);
-    --font-sans: var(--font-sans);
+/* Code blocks */
+.font-mono {
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+/* Terminal animation */
+@keyframes terminal-fade {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
   }
-  :root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.145 0 0);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.205 0 0);
-    --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.97 0 0);
-    --secondary-foreground: oklch(0.205 0 0);
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
-    --accent: oklch(0.97 0 0);
-    --accent-foreground: oklch(0.205 0 0);
-    --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.922 0 0);
-    --input: oklch(0.922 0 0);
-    --ring: oklch(0.708 0 0);
-    --chart-1: oklch(0.87 0 0);
-    --chart-2: oklch(0.556 0 0);
-    --chart-3: oklch(0.439 0 0);
-    --chart-4: oklch(0.371 0 0);
-    --chart-5: oklch(0.269 0 0);
-    --radius: 0.625rem;
-    --sidebar: oklch(0.985 0 0);
-    --sidebar-foreground: oklch(0.145 0 0);
-    --sidebar-primary: oklch(0.205 0 0);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.97 0 0);
-    --sidebar-accent-foreground: oklch(0.205 0 0);
-    --sidebar-border: oklch(0.922 0 0);
-    --sidebar-ring: oklch(0.708 0 0);
-  }
-  .dark {
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.205 0 0);
-    --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.205 0 0);
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.922 0 0);
-    --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.269 0 0);
-    --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.704 0.191 22.216);
-    --border: oklch(1 0 0 / 10%);
-    --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.556 0 0);
-    --chart-1: oklch(0.87 0 0);
-    --chart-2: oklch(0.556 0 0);
-    --chart-3: oklch(0.439 0 0);
-    --chart-4: oklch(0.371 0 0);
-    --chart-5: oklch(0.269 0 0);
-    --sidebar: oklch(0.205 0 0);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.488 0.243 264.376);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.269 0 0);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.556 0 0);
-  }
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-  html {
-    @apply font-sans;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
+.animate-terminal-line {
+  animation: terminal-fade 0.15s ease-out forwards;
+  opacity: 0;
+}
+
+/* Glow effect for accent elements */
+.glow-violet {
+  box-shadow: 0 0 20px oklch(0.58 0.19 260 / 0.2), 0 0 60px oklch(0.58 0.19 260 / 0.06);
+}
+
+/* Subtle grid background */
+.bg-grid {
+  background-image:
+    linear-gradient(oklch(0.58 0.19 260 / 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(0.58 0.19 260 / 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--marino);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3a3a5a;
+}
+
+/* Code editor textarea */
+.code-editor {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  tab-size: 2;
+  resize: vertical;
+}
+
+/* Python syntax highlighting (simple) */
+.syntax-keyword { color: #c678dd; }
+.syntax-string { color: #98c379; }
+.syntax-comment { color: #5c6370; font-style: italic; }
+.syntax-function { color: #61afef; }
+.syntax-decorator { color: #e5c07b; }
+.syntax-number { color: #d19a66; }
